@@ -1,0 +1,3 @@
+#define NEW_DATE = DATE_WITH_OFFSET(6-JUN-2020, 3)
+Value is NEW_DATE
+
