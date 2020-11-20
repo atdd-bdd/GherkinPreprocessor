@@ -309,6 +309,11 @@ TEST_CASE("Filename", "[define]") {
 	Pathname::set_system_path("xxx/yyy");
 	Filename f2("<Two>");
 	CHECK("xxx/yyy/Two" == f2.get_value());
+	std::string path = Filename::get_directory("abc\\def.x");
+	CHECK("abc" == path); 
+	std::string path1 = Filename::get_directory("abc/def.x");
+	CHECK("abc" == path1);
+
 	Pathname p1("abc");
 	CHECK("abc/" == p1.get_value());
 	Pathname p2("def/");
@@ -363,5 +368,6 @@ TEST_CASE("Dates", "[define]") {
 	CHECK(std::string("12-FEB-2007") == ds12);
 
 }
+
 
 

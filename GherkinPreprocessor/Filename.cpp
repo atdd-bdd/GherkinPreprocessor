@@ -6,7 +6,7 @@
 
 std::string Filename::get_directory(const std::string & filename) {
 	std::cmatch m;
-	std::regex include("(.*)[\\/>]", std::regex::icase | std::regex::ECMAScript);
+	std::regex include("(.*)[\\\\/]", std::regex::icase | std::regex::ECMAScript);
 	bool match = std::regex_search(filename.c_str(), m, include);
 	std::string path = ""; 
 	if (match) {
