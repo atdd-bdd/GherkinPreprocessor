@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{a069c741-93a2-4a12-9e75-92c5159694e8}</ProjectGuid>
-    <RootNamespace>GherkinPreprocessor</RootNamespace>
+    <ProjectGuid>{0679cf4d-dea3-497f-8230-fe97ab0e4836}</ProjectGuid>
+    <RootNamespace>TestGherkinProcessor</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,6 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\KenV1\source\repos\GherkinPreprocessor\GherkinPreprocessor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -116,6 +117,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\KenV1\source\repos\GherkinPreprocessor\GherkinPreprocessor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,6 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\KenV1\source\repos\GherkinPreprocessor\GherkinPreprocessor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,36 +142,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Calculate.cpp" />
-    <ClCompile Include="CalculateDouble.cpp" />
-    <ClCompile Include="CalculateInt.cpp" />
-    <ClCompile Include="CSVParser.cpp" />
-    <ClCompile Include="Date.cpp" />
-    <ClCompile Include="Defines.cpp" />
-    <ClCompile Include="Filename.cpp" />
-    <ClCompile Include="GherkinPreprocessor.cpp" />
-    <ClCompile Include="Limiter.cpp" />
-    <ClCompile Include="Line.cpp" />
-    <ClCompile Include="Lines.cpp" />
-    <ClCompile Include="LocalFunctions.cpp" />
-    <ClCompile Include="Log.cpp" />
-    <ClCompile Include="Pathname.cpp" />
-    <ClCompile Include="Processor.cpp" />
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="..\GherkinPreprocessor\Calculate.cpp" />
+    <ClCompile Include="..\GherkinPreprocessor\CalculateDouble.cpp" />
+    <ClCompile Include="..\GherkinPreprocessor\CalculateInt.cpp" />
+    <ClCompile Include="..\GherkinPreprocessor\CSVParser.cpp" />
+    <ClCompile Include="..\GherkinPreprocessor\Date.cpp" />
+    <ClCompile Include="..\GherkinPreprocessor\Defines.cpp" />
+    <ClCompile Include="..\GherkinPreprocessor\Filename.cpp" />
+    <ClCompile Include="..\GherkinPreprocessor\Limiter.cpp" />
+    <ClCompile Include="..\GherkinPreprocessor\Line.cpp" />
+    <ClCompile Include="..\GherkinPreprocessor\Lines.cpp" />
+    <ClCompile Include="..\GherkinPreprocessor\LocalFunctions.cpp" />
+    <ClCompile Include="..\GherkinPreprocessor\Log.cpp" />
+    <ClCompile Include="..\GherkinPreprocessor\Pathname.cpp" />
+    <ClCompile Include="..\GherkinPreprocessor\Processor.cpp" />
+    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="TestGherkinProcessor.cpp" />
+    <ClCompile Include="Helper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CSVParser.h" />
-    <ClInclude Include="Date.h" />
-    <ClInclude Include="Defines.h" />
-    <ClInclude Include="Filename.h" />
-    <ClInclude Include="Limiter.h" />
-    <ClInclude Include="Line.h" />
-    <ClInclude Include="Lines.h" />
-    <ClInclude Include="Calculate.h" />
-    <ClInclude Include="LocalFunctions.h" />
-    <ClInclude Include="Log.h" />
-    <ClInclude Include="Pathname.h" />
-    <ClInclude Include="Processor.h" />
+    <ClInclude Include="Helper.h" />
+    <ClInclude Include="Test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

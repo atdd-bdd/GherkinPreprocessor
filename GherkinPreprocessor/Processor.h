@@ -1,15 +1,10 @@
 #pragma once
 #include <string>
 #include "Lines.h"
+#include "Line.h"
+#include "Filename.h"
 class Processor 
 {
-public: Lines process(Lines & input) {
-	std::list<std::string> data = input.get_data();
-	for (std::string & line : data) 
-	{
-
-	}
-
-	}
+public:	void process(Filename in_name, Filename  out_name);
 };
 
