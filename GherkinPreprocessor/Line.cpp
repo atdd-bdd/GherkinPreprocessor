@@ -42,10 +42,11 @@ void Line::replace( Defines& defines, std::string & matching) {
 	std::regex definelist(pattern.c_str(), std::regex::ECMAScript);
 	bool match = true;
 	Limiter limiter; 
+	std::string term; 
 	while (match) {
 		match = std::regex_search(data.c_str(), m, definelist);
 		if (match) {
-			std::string term = m[1];
+			term = m[1];
 			std::string pattern = "(\\b)(" + term + ")(\\b)";
 			std::regex_search(data.c_str(), m, std::regex(pattern));
 			std::string replacement;
@@ -55,7 +56,7 @@ void Line::replace( Defines& defines, std::string & matching) {
 		}
 		if (limiter.increment_and_test_for_limit()) break; 
 	}
-	limiter.report("define replacement");
+	limiter.report("define replacement:" + term);
 }
 void Line::calculate(){
 	std::cmatch m;

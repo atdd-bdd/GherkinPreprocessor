@@ -123,7 +123,7 @@ TEST_CASE("Recursive insert", "[include]") {
 
 
 	Helper::run_test_with_error("original.feature", original_lines_array, ORIGINAL_SIZE,
-		"Includes  limit exceeded");
+		"Includes \"include.txt\" limit exceeded");
 
 }
 
@@ -153,9 +153,36 @@ TEST_CASE("Redefine", "[define]") {
 	};
 
 	Helper::run_test_with_error("original.feature", original_lines_array, ORIGINAL_SIZE,
-		"Attempted redefinition #define SOMETHING to be  2");
+		"redefinition #define SOMETHING to be  2");
 
 }
+
+TEST_CASE("Redefine check ", "[define]") {
+	const int ORIGINAL_SIZE = 6;
+	std::string original_lines_array[ORIGINAL_SIZE] = {
+		"#define SOMETHING 1",
+		"Unchanged text",
+		"Something is SOMETHING",
+		"#define SOMETHING 2",
+		"Unchanged text",
+		"Something is SOMETHING",
+	};
+
+	const int UPDATED_SIZE = 4;
+	std::string updated_lines_array[UPDATED_SIZE] = {
+		"Unchanged text",
+		"Something is 1",
+		"Unchanged text",
+		"Something is 2",
+	};
+	Lines updated_lines(updated_lines_array, UPDATED_SIZE);
+	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
+		"updated.feature", updated_lines_array, UPDATED_SIZE);
+
+
+}
+
+
 
 
 TEST_CASE("Recursive define", "[define]") {
@@ -167,7 +194,7 @@ TEST_CASE("Recursive define", "[define]") {
 	};
 
 	Helper::run_test_with_error("original.feature", original_lines_array, ORIGINAL_SIZE,
-		"define replacement limit exceeded");
+		"define replacement:SOMETHING limit exceeded");
 
 }
 
@@ -283,24 +310,27 @@ TEST_CASE("Calculated define with error", "[define]") {
 }
 
 TEST_CASE("Calculated local function define", "[define]") {
-	const int ORIGINAL_SIZE = 6;
+	const int ORIGINAL_SIZE = 8;
 	std::string original_lines_array[ORIGINAL_SIZE] = {
-		"#define SOMETHING = GET_TODAY()",
-		"#define ELSE = DATE_WITH_OFFSET(\"10-JAN-2020\",3)",
-		"#define SOMETHING_ELSE = DATE_WITH_OFFSET(SOMETHING, 2)",
-		"Else is ELSE",
-		"Something is SOMETHING",
-		"Something else is SOMETHING_ELSE"
+		"#define TODAY = GET_TODAY()",
+		"#define OFFSETED = DATE_WITH_OFFSET(\"10-JAN-2020\",3)",
+		"#define TODAY_OFFSET = DATE_WITH_OFFSET(TODAY, 2)",	
+		"#define DIFFERENCE = DIFFERENCE_IN_DAYS(\"10-JAN-2020\",OFFSETED)",
+		"Today TODAY",
+		"Today offset TODAY_OFFSET", 
+		"Offseted OFFSETED",
+		"Difference DIFFERENCE"
 	};
 	Date d;
 	std::string ds = d.to_string();
 	Date d1 = d.offset_by(2);
 	std::string d1s = d1.to_string();
-	const int UPDATED_SIZE = 3;
+	const int UPDATED_SIZE = 4;
 	std::string updated_lines_array[UPDATED_SIZE] = {
-		"Else is 13-JAN-2020",
-		"Something is " + ds,
-		"Something else is " + d1s
+		"Today " + ds, 
+		"Today offset " + d1s,
+		"Offseted 13-JAN-2020",
+		"Difference 3"
 	};
 	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"updated.feature", updated_lines_array, UPDATED_SIZE);
@@ -369,5 +399,115 @@ TEST_CASE("Dates", "[define]") {
 
 }
 
+TEST_CASE("Lots of  define", "[define]") {
+	const int ORIGINAL_SIZE = 60;
+	std::string original_lines_array[ORIGINAL_SIZE] = {
+"#define SOMETHING01 01",
+"Unchanged text",
+"Something is SOMETHING01",
+"#define SOMETHING02 02",
+"Unchanged text",
+"Something is SOMETHING02",
+"#define SOMETHING03 03",
+"Unchanged text",
+"Something is SOMETHING03",
+"#define SOMETHING04 04",
+"Unchanged text",
+"Something is SOMETHING04",
+"#define SOMETHING05 05",
+"Unchanged text",
+"Something is SOMETHING05",
+"#define SOMETHING06 06",
+"Unchanged text",
+"Something is SOMETHING06",
+"#define SOMETHING07 07",
+"Unchanged text",
+"Something is SOMETHING07",
+"#define SOMETHING08 08",
+"Unchanged text",
+"Something is SOMETHING08",
+"#define SOMETHING09 09",
+"Unchanged text",
+"Something is SOMETHING09",
+"#define SOMETHING10 10",
+"Unchanged text",
+"Something is SOMETHING10",
+"#define SOMETHING11 11",
+"Unchanged text",
+"Something is SOMETHING11",
+"#define SOMETHING12 12",
+"Unchanged text",
+"Something is SOMETHING12",
+"#define SOMETHING13 13",
+"Unchanged text",
+"Something is SOMETHING13",
+"#define SOMETHING14 14",
+"Unchanged text",
+"Something is SOMETHING14",
+"#define SOMETHING15 15",
+"Unchanged text",
+"Something is SOMETHING15",
+"#define SOMETHING16 16",
+"Unchanged text",
+"Something is SOMETHING16",
+"#define SOMETHING17 17",
+"Unchanged text",
+"Something is SOMETHING17",
+"#define SOMETHING18 18",
+"Unchanged text",
+"Something is SOMETHING18",
+"#define SOMETHING19 19",
+"Unchanged text",
+"Something is SOMETHING19",
+"#define SOMETHING20 20",
+"Unchanged text",
+"Something is SOMETHING20",
+	};
+	const int UPDATED_SIZE = 40;
+	std::string updated_lines_array[UPDATED_SIZE] = {
+"Unchanged text",
+"Something is 01",
+"Unchanged text",
+"Something is 02",
+"Unchanged text",
+"Something is 03",
+"Unchanged text",
+"Something is 04",
+ "Unchanged text",
+"Something is 05",
+"Unchanged text",
+"Something is 06",
+"Unchanged text",
+"Something is 07",
+"Unchanged text",
+"Something is 08",
+"Unchanged text",
+"Something is 09",
+"Unchanged text",
+"Something is 10",
+"Unchanged text",
+"Something is 11",
+"Unchanged text",
+"Something is 12",
+"Unchanged text",
+"Something is 13",
+"Unchanged text",
+"Something is 14",
+"Unchanged text",
+"Something is 15",
+"Unchanged text",
+"Something is 16",
+"Unchanged text",
+"Something is 17",
+"Unchanged text",
+"Something is 18",
+"Unchanged text",
+"Something is 19",
+"Unchanged text",
+"Something is 20" ,
+	};
+	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
+		"updated.feature", updated_lines_array, UPDATED_SIZE);
+}
 
 

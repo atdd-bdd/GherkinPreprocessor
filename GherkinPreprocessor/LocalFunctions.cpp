@@ -19,11 +19,18 @@ std::string today(std::string parameters[])
 	Date d;
 	return d.to_string();
 }
+std::string offset_between_two_dates(std::string parameters[]) {
+	Date d1(parameters[0]);
+	Date d2(parameters[1]); 
+	int offset = d2.days_between(d1);
+	return std::to_string(offset); 
+}
 
 Function Calculate::functions[] = {
 		{"GET_TODAY", today},
 		{"DATE_WITH_OFFSET", date_with_offset},
 		{"TODAY_OFFSET_BY", today_with_offset},
+	    {"DIFFERENCE_IN_DAYS",offset_between_two_dates },
 };
 
 

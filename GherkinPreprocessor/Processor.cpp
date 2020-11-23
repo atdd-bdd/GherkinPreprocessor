@@ -28,24 +28,23 @@ void Processor::process(Filename in_name, Filename out_name) {
 		else
 			s++;
 	}
-	limiter.report("Includes ");
+	limiter.report("Includes " + first_match);
 	// Get the #defines
-	for (auto s = in_data.begin(); s != in_data.end();) {
+		for (auto s = in_data.begin(); s != in_data.end();) {
 		Line l(*s);
 		if (l.parse(first_match, second_match) == LineType::DEFINE) {
 			defines.insert(first_match, second_match);
 			s = in_data.erase(s);
 		}
 		else
-			s++;
-	}
-	// Now do the replacements 
-	std::string matches = defines.get_terms_with_bars(); 
-	for (auto s = in_data.begin(); s != in_data.end(); s++) {
-		Line l(*s);
+		{
+			std::string matches = defines.make_search_with_bars();
+			Line l(*s);
 			l.replace(defines, matches);
+			s++;
+		}
 	}
-	
+
 	in.write_lines(out_name);
 
 }

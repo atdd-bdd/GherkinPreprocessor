@@ -19,7 +19,10 @@
     }
 void Log::write(LogType log_type, const std::string& message) {
 	list.push_back(message); 
-	std::cerr << "Error " << message << std::endl;
+	if (log_type == LogType::SEVERE)
+		std::cerr << "Error " << message << std::endl;
+	else 
+		std::cerr << "Warning" << message << std::endl;
 	if (log_type == LogType::SEVERE)
 		terminate = true;
 }
