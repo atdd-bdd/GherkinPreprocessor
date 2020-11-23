@@ -28,7 +28,7 @@ int main(int argc, char *argv [])
 
     Processor p;
     p.process(Filename(in), Filename(out));
-    Log::print(); 
+   
     if (Log::is_terminate())
         exit(1);
     else
