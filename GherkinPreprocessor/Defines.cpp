@@ -33,8 +33,8 @@ bool Defines::find(const std::string& term, std::string& definition)
 	}
 	return false;
 }
-std::string Defines::get_terms_with_bars() {
-
+void Defines::replace_in_all_defines() {
+	// used if want to do forward references in #defines 
 
 	std::string result = make_search_with_bars();
 	// Do the substitutions already
@@ -42,7 +42,7 @@ std::string Defines::get_terms_with_bars() {
 		replace_in_a_define(s, result);
 	}
 
-	return result;
+	return;
 }
 
 void Defines::replace_in_a_define(std::map<std::string, std::string>::iterator& s, std::string& result)

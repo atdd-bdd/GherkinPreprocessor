@@ -13,29 +13,28 @@
 
 TEST_CASE("Simple insert", "[include]") {
 	// Given insert file 
-	const int INSERT_SIZE = 2;
-	std::string to_insert_array[INSERT_SIZE] = {
+	std::string to_insert_array[] = {
 		"Insert Text 1",
 		"Insert Text 2"
 	};
+	const int INSERT_SIZE = sizeof(to_insert_array) / sizeof(std::string);
 	Helper::create_file(Filename("include.txt"), to_insert_array, INSERT_SIZE);
 
 	// Create source file 
-	const int ORIGINAL_SIZE = 3;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+	std::string original_lines_array[] = {
 		"Original Text 1",
 		"#include \"include.txt\"",
 		"Original Text 2"
 	};
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
 
-	const int UPDATED_SIZE = 4;
-	std::string updated_lines_array[UPDATED_SIZE] = {
+	std::string updated_lines_array[] = {
 		"Original Text 1",
 		"Insert Text 1",
 		"Insert Text 2",
 		"Original Text 2"
 	};
-
+	const int UPDATED_SIZE = sizeof(updated_lines_array) / sizeof(std::string);
 	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"updated.feature", updated_lines_array, UPDATED_SIZE);
 }
@@ -43,28 +42,29 @@ TEST_CASE("Simple insert", "[include]") {
 TEST_CASE("Simple insert with system file", "[include]") {
 	Pathname::set_system_path(std::string("../"));
 	// Given insert file 
-	const int INSERT_SIZE = 2;
-	std::string to_insert_array[INSERT_SIZE] = {
+	std::string to_insert_array[] = {
 		"Insert Text 1",
 		"Insert Text 2"
 	};
+	const int INSERT_SIZE = sizeof(to_insert_array) / sizeof(std::string);
 	Helper::create_file(Filename("../elsewhere.txt"), to_insert_array, INSERT_SIZE);
 
 	// Create source file 
-	const int ORIGINAL_SIZE = 3;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+	std::string original_lines_array[] = {
 		"Original Text 1",
 		"#include <elsewhere.txt>",
 		"Original Text 2"
 	};
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
 
-	const int UPDATED_SIZE = 4;
-	std::string updated_lines_array[UPDATED_SIZE] = {
+
+	std::string updated_lines_array[] = {
 		"Original Text 1",
 		"Insert Text 1",
 		"Insert Text 2",
 		"Original Text 2"
 	};
+	const int UPDATED_SIZE = sizeof(updated_lines_array) / sizeof(std::string);
 
 	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"updated.feature", updated_lines_array, UPDATED_SIZE);
@@ -72,54 +72,54 @@ TEST_CASE("Simple insert with system file", "[include]") {
 
 TEST_CASE("Recursive  insert", "[include]") {
 	// Given insert file 
-	const int INSERT_SIZE = 2;
-	std::string to_insert_array[INSERT_SIZE] = {
+	std::string to_insert_array[] = {
 		"#include \"include1.txt\"",
 		"Insert Text 2"
 	};
+	const int INSERT_SIZE = sizeof(to_insert_array) / sizeof(std::string);
 	Helper::create_file(Filename("include.txt"), to_insert_array, INSERT_SIZE);
-	const int INSERT_SIZE_A = 2;
-	std::string to_insert_array1[INSERT_SIZE_A] = {
+	std::string to_insert_array1[] = {
 		"Insert Text A",
 		"Insert Text B"
 	};
+	const int INSERT_SIZE_A = sizeof(to_insert_array1) / sizeof(std::string);
 	Helper::create_file(Filename("include1.txt"), to_insert_array1, INSERT_SIZE_A);
 
 	// Create source file 
-	const int ORIGINAL_SIZE = 3;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+	std::string original_lines_array[] = {
 		"Original Text 1",
 		"#include \"include.txt\"",
 		"Original Text 2"
 	};
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
 
-	const int UPDATED_SIZE = 5;
-	std::string updated_lines_array[UPDATED_SIZE] = {
+	std::string updated_lines_array[] = {
 		"Original Text 1",
 		"Insert Text A",
 		"Insert Text B",
 		"Insert Text 2",
 		"Original Text 2"
 	};
+	const int UPDATED_SIZE = sizeof(updated_lines_array) / sizeof(std::string);
 
 	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"updated.feature", updated_lines_array, UPDATED_SIZE);
 }
 TEST_CASE("Recursive insert", "[include]") {
 	// Given insert file 
-	const int INSERT_SIZE = 2;
-	std::string to_insert_array[INSERT_SIZE] = {
+	std::string to_insert_array[] = {
 		"#include \"include.txt\"",
 	};
+	const int INSERT_SIZE = sizeof(to_insert_array) / sizeof(std::string);
 	Helper::create_file(Filename("include.txt"), to_insert_array, INSERT_SIZE);
 
 	// Create source file 
-	const int ORIGINAL_SIZE = 3;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+	std::string original_lines_array[] = {
 		"Original Text 1",
 		"#include \"include.txt\"",
 		"Original Text 2"
 	};
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
 
 
 	Helper::run_test_with_error("original.feature", original_lines_array, ORIGINAL_SIZE,
@@ -128,29 +128,29 @@ TEST_CASE("Recursive insert", "[include]") {
 }
 
 TEST_CASE("Simple define", "[define]") {
-	const int ORIGINAL_SIZE = 3;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+	std::string original_lines_array[] = {
 		"#define SOMETHING 1",
 		"Unchanged text",
 		"Something is SOMETHING"
 	};
-	const int UPDATED_SIZE = 2;
-	std::string updated_lines_array[UPDATED_SIZE] = {
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
+	std::string updated_lines_array[] = {
 		"Unchanged text",
 		"Something is 1"
 	};
+	const int UPDATED_SIZE = sizeof(updated_lines_array) / sizeof(std::string);
 	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"updated.feature", updated_lines_array, UPDATED_SIZE);
 }
 
 TEST_CASE("Redefine", "[define]") {
-	const int ORIGINAL_SIZE = 4;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+	std::string original_lines_array[] = {
 		"#define SOMETHING 1",
 		"#define SOMETHING 2",
 		"Unchanged text",
 		"Something is SOMETHING"
 	};
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
 
 	Helper::run_test_with_error("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"redefinition #define SOMETHING to be  2");
@@ -158,8 +158,7 @@ TEST_CASE("Redefine", "[define]") {
 }
 
 TEST_CASE("Redefine check ", "[define]") {
-	const int ORIGINAL_SIZE = 6;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+	std::string original_lines_array[] = {
 		"#define SOMETHING 1",
 		"Unchanged text",
 		"Something is SOMETHING",
@@ -167,14 +166,15 @@ TEST_CASE("Redefine check ", "[define]") {
 		"Unchanged text",
 		"Something is SOMETHING",
 	};
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
 
-	const int UPDATED_SIZE = 4;
-	std::string updated_lines_array[UPDATED_SIZE] = {
+	std::string updated_lines_array[] = {
 		"Unchanged text",
 		"Something is 1",
 		"Unchanged text",
 		"Something is 2",
 	};
+	const int UPDATED_SIZE = sizeof(updated_lines_array) / sizeof(std::string);
 	Lines updated_lines(updated_lines_array, UPDATED_SIZE);
 	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"updated.feature", updated_lines_array, UPDATED_SIZE);
@@ -186,13 +186,12 @@ TEST_CASE("Redefine check ", "[define]") {
 
 
 TEST_CASE("Recursive define", "[define]") {
-	const int ORIGINAL_SIZE = 3;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+	std::string original_lines_array[] = {
 		"#define SOMETHING SOMETHING",
 		"Unchanged text",
 		"Something is SOMETHING"
 	};
-
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
 	Helper::run_test_with_error("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"define replacement:SOMETHING limit exceeded");
 
@@ -203,8 +202,7 @@ TEST_CASE("Recursive define", "[define]") {
 TEST_CASE("Mulitple defines", "[define]") {
 
 	// Create source file 
-	const int ORIGINAL_SIZE = 8;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+	std::string original_lines_array[] = {
 		"#define SOMETHING_ELSE 2",
 		"#define SOMETHING 1",
 		"#define A1 X",
@@ -214,14 +212,16 @@ TEST_CASE("Mulitple defines", "[define]") {
 		"Two are SOMETHING and SOMETHING_ELSE",
 		"Value of a1 is A1"
 	};
-	const int UPDATED_SIZE = 5;
-	std::string updated_lines_array[UPDATED_SIZE] = {
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
+	std::string updated_lines_array[] = {
 		"Unchanged text",
 		"Something is 1",
 		"Something else is 2",
 		"Two are 1 and 2",
 		"Value of a1 is X"
 	};
+	const int UPDATED_SIZE = sizeof(updated_lines_array) / sizeof(std::string);
+
 	Lines updated_lines(updated_lines_array, UPDATED_SIZE);
 	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"updated.feature", updated_lines_array, UPDATED_SIZE);
@@ -230,8 +230,7 @@ TEST_CASE("Mulitple defines", "[define]") {
 TEST_CASE("Mulitple defines within defines", "[define]") {
 
 	// Create source file 
-	const int ORIGINAL_SIZE = 8;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+		std::string original_lines_array[] = {
 		"#define SOMETHING_ELSE SOMETHING + 2",
 		"#define SOMETHING 1",
 		"#define A1 X",
@@ -241,14 +240,16 @@ TEST_CASE("Mulitple defines within defines", "[define]") {
 		"Two are SOMETHING and SOMETHING_ELSE",
 		"Value of a1 is A1"
 	};
-	const int UPDATED_SIZE = 5;
-	std::string updated_lines_array[UPDATED_SIZE] = {
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
+
+	std::string updated_lines_array[] = {
 		"Unchanged text",
 		"Something is 1",
 		"Something else is 1 + 2",
 		"Two are 1 and 1 + 2",
 		"Value of a1 is X"
 	};
+	const int UPDATED_SIZE = sizeof(updated_lines_array) / sizeof(std::string);
 	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"updated.feature", updated_lines_array, UPDATED_SIZE);
 
@@ -256,62 +257,63 @@ TEST_CASE("Mulitple defines within defines", "[define]") {
 
 TEST_CASE("CSV insert", "[include]") {
 	// Given insert file 
-	const int INSERT_SIZE = 3;
-	std::string to_insert_array[INSERT_SIZE] = {
+	std::string to_insert_array[] = {
 		"a,b,c",
 		"1,2,3",
 		"4,5,6" };
+	const int INSERT_SIZE = sizeof(to_insert_array) / sizeof(std::string);
 	Helper::create_file(Filename("include.csv"), to_insert_array, INSERT_SIZE);
 
 	// Create source file 
-	const int ORIGINAL_SIZE = 3;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+	std::string original_lines_array[] = {
 		"Original Text 1",
 		"#include \"include.csv\"",
 		"Original Text 2"
 	};
-	const int UPDATED_SIZE = 5;
-	std::string updated_lines_array[UPDATED_SIZE] = {
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
+
+	std::string updated_lines_array[] = {
 		"Original Text 1",
 		"|a|b|c|",
 		"|1|2|3|",
 		"|4|5|6|",
 		"Original Text 2"
 	};
+	const int UPDATED_SIZE = sizeof(updated_lines_array) / sizeof(std::string);
+
 	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"updated.feature", updated_lines_array, UPDATED_SIZE);
 }
 
 TEST_CASE("Calculated define", "[define]") {
-	const int ORIGINAL_SIZE = 3;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+	std::string original_lines_array[] = {
 		"#define SOMETHING = 1 +2",
 		"Unchanged text",
 		"Something is SOMETHING"
 	};
-	const int UPDATED_SIZE = 2;
-	std::string updated_lines_array[UPDATED_SIZE] = {
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
+	std::string updated_lines_array[] = {
 		"Unchanged text",
 		"Something is 3"
 	};
+	const int UPDATED_SIZE = sizeof(updated_lines_array) / sizeof(std::string);
 	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"updated.feature", updated_lines_array, UPDATED_SIZE);
 }
 
 TEST_CASE("Calculated define with error", "[define]") {
-	const int ORIGINAL_SIZE = 3;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+	std::string original_lines_array[] = {
 		"#define SOMETHING = NOT_THERE()",
 		"Something is SOMETHING"
 	};
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
 
 	Helper::run_test_with_error("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"Unknown function to calculate NOT_THERE");
 }
 
 TEST_CASE("Calculated local function define", "[define]") {
-	const int ORIGINAL_SIZE = 8;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+	std::string original_lines_array[] = {
 		"#define TODAY = GET_TODAY()",
 		"#define OFFSETED = DATE_WITH_OFFSET(\"10-JAN-2020\",3)",
 		"#define TODAY_OFFSET = DATE_WITH_OFFSET(TODAY, 2)",	
@@ -321,17 +323,19 @@ TEST_CASE("Calculated local function define", "[define]") {
 		"Offseted OFFSETED",
 		"Difference DIFFERENCE"
 	};
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
+
 	Date d;
 	std::string ds = d.to_string();
 	Date d1 = d.offset_by(2);
 	std::string d1s = d1.to_string();
-	const int UPDATED_SIZE = 4;
-	std::string updated_lines_array[UPDATED_SIZE] = {
+	std::string updated_lines_array[] = {
 		"Today " + ds, 
 		"Today offset " + d1s,
 		"Offseted 13-JAN-2020",
 		"Difference 3"
 	};
+	const int UPDATED_SIZE = sizeof(updated_lines_array) / sizeof(std::string);
 	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"updated.feature", updated_lines_array, UPDATED_SIZE);
 }
@@ -400,8 +404,7 @@ TEST_CASE("Dates", "[define]") {
 }
 
 TEST_CASE("Lots of  define", "[define]") {
-	const int ORIGINAL_SIZE = 60;
-	std::string original_lines_array[ORIGINAL_SIZE] = {
+	std::string original_lines_array[] = {
 "#define SOMETHING01 01",
 "Unchanged text",
 "Something is SOMETHING01",
@@ -463,8 +466,9 @@ TEST_CASE("Lots of  define", "[define]") {
 "Unchanged text",
 "Something is SOMETHING20",
 	};
-	const int UPDATED_SIZE = 40;
-	std::string updated_lines_array[UPDATED_SIZE] = {
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
+
+	std::string updated_lines_array[] = {
 "Unchanged text",
 "Something is 01",
 "Unchanged text",
@@ -506,6 +510,7 @@ TEST_CASE("Lots of  define", "[define]") {
 "Unchanged text",
 "Something is 20" ,
 	};
+	const int UPDATED_SIZE = sizeof(updated_lines_array) / sizeof(std::string);
 	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"updated.feature", updated_lines_array, UPDATED_SIZE);
 }
