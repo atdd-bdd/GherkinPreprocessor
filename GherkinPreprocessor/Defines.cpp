@@ -2,6 +2,7 @@
 #include "Log.h"
 #include "Line.h"
 #include "atmsp.h"
+bool Defines::redefines_allowed = false; 
 void Defines::insert(std::string& term, std::string& definition) {
 	auto s = data.find(term);
 	if (s == data.end()) {
@@ -12,14 +13,17 @@ void Defines::insert(std::string& term, std::string& definition) {
 		}
 	else
 	{
-		std::string previous = s->second; 
-		data.erase(s); 
-		auto n = data.insert(std::make_pair(term, definition));
-		std::string result = make_search_with_bars();
-		// Do the substitutions already
-		replace_in_a_define(n.first, result);
-		if (s->second != definition)
+		std::string previous = s->second;
+		if (previous != definition)
 			Log::write(LogType::WARNING, "redefinition #define " + term + " to be  " + definition);
+		if (redefines_allowed) {
+			data.erase(s);
+			auto n = data.insert(std::make_pair(term, definition));
+			std::string result = make_search_with_bars();
+			// Do the substitutions already
+			replace_in_a_define(n.first, result);
+			}
+
 	}
 }
 

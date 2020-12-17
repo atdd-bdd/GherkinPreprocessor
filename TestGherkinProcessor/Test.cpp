@@ -157,8 +157,9 @@ TEST_CASE("Redefine", "[define]") {
 
 }
 
-TEST_CASE("Redefine check ", "[define]") {
+TEST_CASE("Redefine allowed ", "[define]") {
 	std::string original_lines_array[] = {
+		"@allow_redefines",
 		"#define SOMETHING 1",
 		"Unchanged text",
 		"Something is SOMETHING",
@@ -169,6 +170,7 @@ TEST_CASE("Redefine check ", "[define]") {
 	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
 
 	std::string updated_lines_array[] = {
+		"@allow_redefines",
 		"Unchanged text",
 		"Something is 1",
 		"Unchanged text",
@@ -183,6 +185,52 @@ TEST_CASE("Redefine check ", "[define]") {
 }
 
 
+TEST_CASE("Redefine not allowed ", "[define]") {
+	std::string original_lines_array[] = {
+		"#define SOMETHING 1",
+		"Unchanged text",
+		"Something is SOMETHING",
+		"#define SOMETHING 2",
+		"Unchanged text",
+		"Something is SOMETHING",
+	};
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
+
+	std::string updated_lines_array[] = {
+		"Unchanged text",
+		"Something is 1",
+		"Unchanged text",
+		"Something is 1",
+	};
+	const int UPDATED_SIZE = sizeof(updated_lines_array) / sizeof(std::string);
+	Lines updated_lines(updated_lines_array, UPDATED_SIZE);
+	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
+		"updated.feature", updated_lines_array, UPDATED_SIZE);
+
+
+}
+ 
+TEST_CASE("Needs preprocessing removed ", "[define]") {
+	std::string original_lines_array[] = {
+		"@needs_preprocessing @other",
+		"Unchanged text 1",
+		"Unchanged text 2",
+
+	};
+	const int ORIGINAL_SIZE = sizeof(original_lines_array) / sizeof(std::string);
+
+	std::string updated_lines_array[] = {
+		" @other",
+		"Unchanged text 1",
+		"Unchanged text 2",
+	};
+	const int UPDATED_SIZE = sizeof(updated_lines_array) / sizeof(std::string);
+	Lines updated_lines(updated_lines_array, UPDATED_SIZE);
+	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
+		"updated.feature", updated_lines_array, UPDATED_SIZE);
+
+
+}
 
 
 TEST_CASE("Recursive define", "[define]") {
@@ -402,7 +450,7 @@ TEST_CASE("Dates", "[define]") {
 	CHECK(std::string("12-FEB-2007") == ds12);
 
 }
-
+#if 0
 TEST_CASE("Lots of  define", "[define]") {
 	std::string original_lines_array[] = {
 "#define SOMETHING01 01",
@@ -514,5 +562,5 @@ TEST_CASE("Lots of  define", "[define]") {
 	Helper::run_test("original.feature", original_lines_array, ORIGINAL_SIZE,
 		"updated.feature", updated_lines_array, UPDATED_SIZE);
 }
-
+#endif
 

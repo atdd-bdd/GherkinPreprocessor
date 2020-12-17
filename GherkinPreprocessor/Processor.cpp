@@ -2,6 +2,7 @@
 #include "Defines.h"
 
 #include "Limiter.h"
+#include "Defines.h"
 void Processor::process(Filename in_name, Filename out_name) {
 	Defines defines; 
 	Lines in;
@@ -11,7 +12,24 @@ void Processor::process(Filename in_name, Filename out_name) {
 	std::string first_match;
 	std::string second_match; 
 	Limiter limiter; 
+	// Check for the two flags on the first line
 	// Include 
+	if (in_data.begin() != in_data.end())
+	{
+		std::string x = *in_data.begin();
+		std::string NEEDS_PREPROCESSING = "@needs_preprocessing";
+		std::string ALLOW_REDFINES = "@allow_redefines";
+		size_t pos = x.find(NEEDS_PREPROCESSING); 
+		int size = NEEDS_PREPROCESSING.length();
+		if (pos != std::string::npos)
+		{
+			std::string new_line = x.replace(pos, size, "");
+			*in_data.begin() = new_line; 
+		}
+		Defines::redefines_allowed = false;
+		if (x.find(ALLOW_REDFINES)!= std::string::npos)
+			Defines::redefines_allowed = true;
+	}
 	for (auto s = in_data.begin(); s != in_data.end(); ) {
 		
 		Line l(*s);

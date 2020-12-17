@@ -31,7 +31,7 @@ bool Helper::compare_to_file(Filename name, Lines to_compare)
 	{
 		auto one = in_data.begin();
 		auto two = other_data.begin();
-		for (; one != in_data.end(); one++, two++) {
+		for (; one != in_data.end() && two !=other_data.end(); one++, two++) {
 			CHECK(*one == *two);
 			ret |= (*one == *two);
 		}
